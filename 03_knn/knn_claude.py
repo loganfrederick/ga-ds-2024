@@ -119,6 +119,23 @@ if __name__ == "__main__":
         X, y, test_size=0.2, random_state=42
     )
 
+    # KNN Implementation Explanation:
+    #
+    # 1. KNearestNeighbors(k=3):
+    #    - Creates a new instance of the KNN classifier
+    #    - The parameter k=3 specifies that we want to consider the 3 nearest neighbors when making predictions
+    #    - For example, if k=3 and two neighbors are class A and one is class B, the prediction will be class A
+    #
+    # 2. knn.fit(X_train, y_train):
+    #    - Unlike many other ML algorithms, KNN doesn't actually "train" in the traditional sense
+    #    - The fit method simply stores the training data (X_train and y_train) in memory
+    #    - X_train contains the feature values (in this case, iris measurements)
+    #    - y_train contains the corresponding labels (in this case, iris species)
+    #    - Later, when making predictions, the algorithm will use this stored data to find the nearest neighbors
+    #
+    # This is why KNN is called a "lazy learner" - it doesn't create any mathematical model during training.
+    # Instead, it just memorizes the training data and does all the work (finding nearest neighbors) at prediction time.
+
     # Initialize and train KNN classifier
     knn = KNearestNeighbors(k=3)
     knn.fit(X_train, y_train)
