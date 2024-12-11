@@ -131,6 +131,19 @@ if __name__ == "__main__":
         'num_tax_liens', 'months_since_last_delinquent'
     ]
     
+    # Feature importance in logistic regression is measured using the absolute values
+    # of the model's coefficients (model.coef_[0]). The magnitude of these coefficients 
+    # indicates how strongly each feature influences the prediction:
+    # - Larger absolute values = stronger influence
+    # - Smaller absolute values = weaker influence
+    # - Sign (+ or -) indicates direction of relationship
+    #
+    # Limitations of this approach:
+    # 1. Features must be scaled for coefficients to be comparable
+    # 2. Assumes features are independent
+    # 3. Doesn't capture non-linear relationships
+    # 4. Less sophisticated than other methods like those in tree-based models
+    
     # Plot feature importance
     plt.figure(figsize=(12, 6))
     plt.bar(feature_names, abs(model.coef_[0]))
