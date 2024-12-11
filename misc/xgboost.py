@@ -35,6 +35,18 @@ xgb_clf = xgb.XGBClassifier(
     n_jobs=-1  # Use all CPU cores
 )
 
+# XGBoost Training Process:
+# 1. Starts with an initial prediction (typically the mean for regression or log-odds for classification)
+# 2. For each boosting round (n_estimators=100):
+#    a. Calculates the residuals (difference between actual and predicted values)
+#    b. Builds a decision tree to predict these residuals
+#    c. Makes predictions using this tree
+#    d. Updates the overall prediction by adding the tree's predictions * learning_rate (0.1)
+#    e. Applies regularization to prevent overfitting
+# 3. The eval_set allows monitoring of model performance on test data during training
+# 4. 'logloss' metric measures the quality of probabilistic predictions
+#    (lower values indicate better performance)
+
 # Train the model
 xgb_clf.fit(
     X_train, 
