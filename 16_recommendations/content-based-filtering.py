@@ -58,7 +58,15 @@ movies_df['content'] = movies_df['genres'] + ' ' + movies_df['plot']
 tfidf = TfidfVectorizer(stop_words='english')
 tfidf_matrix = tfidf.fit_transform(movies_df['content'])
 
-# Calculate cosine similarity between movies
+# Cosine similarity measures the similarity between two vectors by calculating the cosine of the angle between them:
+# - Returns values between -1 and 1 (-1: opposite, 0: perpendicular, 1: identical)
+# - For TF-IDF vectors, values are always between 0 and 1 since values are non-negative
+# - Formula: cos(θ) = (A·B)/(||A||·||B||) where:
+#   * A·B is the dot product of vectors
+#   * ||A|| and ||B|| are the vector magnitudes
+# 
+# In this case, it compares each movie's TF-IDF vector with every other movie's vector,
+# creating a matrix where higher values indicate more similar content
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
 def get_recommendations(movie_title, cosine_sim=cosine_sim, df=movies_df):
