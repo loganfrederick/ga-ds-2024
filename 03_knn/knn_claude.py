@@ -80,10 +80,13 @@ class KNearestNeighbors:
         predictions = []
         
         # Loop through each test sample
-        for x in X:
+        for i, x in enumerate(X):
+            print(f"\nProcessing test sample #{i+1}:")
+            print(f"Features: {x}")
+            
             # Calculate distances between test sample and all training samples
             distances = []
-            for x_train in self.X_train:
+            for j, x_train in enumerate(self.X_train):
                 dist = self.euclidean_distance(x, x_train)
                 distances.append(dist)
             
@@ -93,9 +96,15 @@ class KNearestNeighbors:
             # Get labels of k-nearest neighbors
             k_nearest_labels = [self.y_train[i] for i in k_indices]
             
+            print(f"Found {self.k} nearest neighbors:")
+            for idx, label in zip(k_indices, k_nearest_labels):
+                print(f"  - Distance: {distances[idx]:.2f}, Label: {label}")
+            
             # Majority vote to determine prediction
             most_common = Counter(k_nearest_labels).most_common(1)
-            predictions.append(most_common[0][0])
+            prediction = most_common[0][0]
+            print(f"Final prediction (majority vote): {prediction}")
+            predictions.append(prediction)
         
         return predictions
 
@@ -115,8 +124,9 @@ if __name__ == "__main__":
     knn.fit(X_train, y_train)
 
     # Make predictions
+    print("\nMaking predictions on test data...")
     predictions = knn.predict(X_test)
 
     # Calculate and print accuracy
     accuracy = accuracy_score(y_test, predictions)
-    print(f"Accuracy: {accuracy:.2f}")
+    print(f"\nFinal Accuracy: {accuracy:.2f}")
