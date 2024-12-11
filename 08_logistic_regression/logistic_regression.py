@@ -62,6 +62,11 @@ def train_credit_model():
     X_test_scaled = scaler.transform(X_test)
     
     # Train the model
+    # The optimization process works by:
+    # 1. Making predictions using the logistic function: p(y) = 1 / (1 + e^(-wx))
+    # 2. Computing the error using log loss (cross-entropy)
+    # 3. Adjusting coefficients to minimize this error
+    # 4. Repeating until convergence or max iterations reached
     model = LogisticRegression(random_state=42)
     model.fit(X_train_scaled, y_train)
     
