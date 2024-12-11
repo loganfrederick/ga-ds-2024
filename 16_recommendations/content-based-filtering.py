@@ -35,6 +35,25 @@ movies_df = pd.DataFrame(movies_data)
 # Combine genres and plot for content-based filtering
 movies_df['content'] = movies_df['genres'] + ' ' + movies_df['plot']
 
+# TF-IDF (Term Frequency-Inverse Document Frequency) vectorizer converts text into numerical vectors by considering:
+#
+# 1. Term Frequency (TF): How often a word appears in a document
+#    Example: In "I love this movie", "love" has TF=1, "movie" has TF=1
+#
+# 2. Inverse Document Frequency (IDF): How unique a word is across all documents
+#    - Words appearing in many documents (like "the", "is") get lower weights
+#    - Rare words get higher weights
+#    Example: If "movie" appears in all documents (lower IDF), "love" in only two (higher IDF)
+#
+# 3. TF-IDF Score = TF × IDF
+#    - Common words in a document but rare across all documents get higher scores
+#    - Common words that appear everywhere get lower scores
+#
+# This allows us to:
+# - Convert movie descriptions into numerical vectors
+# - Give more weight to distinctive terms that better characterize each movie
+# - Ignore common words that don't help differentiate between movies
+
 # Create TF-IDF vectorizer
 tfidf = TfidfVectorizer(stop_words='english')
 tfidf_matrix = tfidf.fit_transform(movies_df['content'])
