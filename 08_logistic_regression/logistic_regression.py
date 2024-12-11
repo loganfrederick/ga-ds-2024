@@ -79,8 +79,17 @@ def convert_to_credit_score(probability):
 
 def predict_credit_score(model, scaler, customer_data):
     """Predict credit score for a customer."""
+    # Convert customer_data list to DataFrame with proper column names
+    feature_names = [
+        'age', 'income', 'employment_length', 'debt_to_income', 'credit_score',
+        'num_credit_lines', 'num_credit_inquiries', 'credit_utilization',
+        'num_late_payments', 'months_since_last_late', 'num_bankruptcies',
+        'num_tax_liens', 'months_since_last_delinquent'
+    ]
+    customer_df = pd.DataFrame([customer_data], columns=feature_names)
+    
     # Scale the input data
-    scaled_data = scaler.transform([customer_data])
+    scaled_data = scaler.transform(customer_df)
     
     # Get probability of good loan
     probability = model.predict_proba(scaled_data)[0][1]
