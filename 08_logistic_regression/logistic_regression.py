@@ -65,7 +65,12 @@ def train_credit_model():
     # The optimization process works by:
     # 1. Making predictions using the logistic function: p(y) = 1 / (1 + e^(-wx))
     # 2. Computing the error using log loss (cross-entropy)
-    # 3. Adjusting coefficients to minimize this error
+    # 3. Adjusting coefficients using gradient descent:
+    #    - Calculate gradient: grad = (prediction - actual) * feature_value
+    #    - Update rule: w = w - learning_rate * gradient
+    #    - This moves coefficients in direction that reduces error
+    # In scikit-learn's implementation, this process is optimized using 
+    # sophisticated algorithms like "LBFGS" (the default solver)
     # 4. Repeating until convergence or max iterations reached
     model = LogisticRegression(random_state=42)
     model.fit(X_train_scaled, y_train)
