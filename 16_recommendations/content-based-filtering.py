@@ -68,6 +68,11 @@ def get_recommendations(movie_title, cosine_sim=cosine_sim, df=movies_df):
     # Get the index of the movie
     idx = df[df['title'] == movie_title].index[0]
     
+    # Print the content features of the selected movie
+    print(f"\nSelected movie content features:")
+    print(f"Genres: {df['genres'].iloc[idx]}")
+    print(f"Plot: {df['plot'].iloc[idx]}")
+    
     # Get similarity scores for all movies
     sim_scores = list(enumerate(cosine_sim[idx]))
     
@@ -76,6 +81,15 @@ def get_recommendations(movie_title, cosine_sim=cosine_sim, df=movies_df):
     
     # Get top 3 similar movies (excluding the movie itself)
     sim_scores = sim_scores[1:4]
+    
+    # Print similarity scores and features for recommended movies
+    print("\nTop recommendations with similarity scores:")
+    for score in sim_scores:
+        movie_idx = score[0]
+        similarity = score[1]
+        print(f"\n{df['title'].iloc[movie_idx]} - Similarity: {similarity:.2f}")
+        print(f"Genres: {df['genres'].iloc[movie_idx]}")
+        print(f"Plot: {df['plot'].iloc[movie_idx]}")
     
     # Get movie indices
     movie_indices = [i[0] for i in sim_scores]
@@ -86,7 +100,5 @@ def get_recommendations(movie_title, cosine_sim=cosine_sim, df=movies_df):
 # Example usage
 if __name__ == "__main__":
     movie_title = "The Dark Knight"
-    print(f"\nRecommendations for '{movie_title}':")
+    print(f"\nFinding recommendations for '{movie_title}'...")
     recommendations = get_recommendations(movie_title)
-    for i, movie in enumerate(recommendations, 1):
-        print(f"{i}. {movie}")
